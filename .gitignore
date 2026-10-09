@@ -1,0 +1,9 @@
+.gitignore
+coverage
+cover
+.vscode/*
+*/*.exe
+bin/*
+config.yml
+users.txt
+docs/testing.md
