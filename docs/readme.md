@@ -68,8 +68,9 @@ This states model is `fixed`and is used for every step in any processes of any m
 
 Prepare Postgre database. Create user in it, create schema with access for this user (as owner).
 ```sql
-CREATE ROLE <username>;
-CREATE SCHEMA <schema_name> AUTHORIZATION <username>;
+    CREATE ROLE <username>;
+    ALTER ROLE <username> WITH LOGIN;
+    CREATE SCHEMA <schema_name> AUTHORIZATION <username>;
 ```
 
 ## Step2. Configuration
@@ -79,22 +80,22 @@ Copy this file and rename to `config.yml`
 
 File contains settings of application:
 ```yaml
-# ------------------
-# database settings
-# ------------------
+    # ------------------
+    # database settings
+    # ------------------
 
-DB_CONN_STRING: "postgres://postgres:<pass>@<user>:<port>/postgres?sslmode=disable&search_path=<schema>"
-DB_SCHEMA: "<schema>"
-DB_RECREATE_TABLES: true
-DB_QUERY_TIMEOUT: 3000s
+    DB_CONN_STRING: "host=<server> user=<user> password=<pass> dbname=<dbname> port=<port> search_path=<schema>,public"
+    DB_SCHEMA: "<schema>"
+    DB_RECREATE_TABLES: true
+    DB_QUERY_TIMEOUT: 3000s
 
 
-# ------------------
-# service settings
-# ------------------
+    # ------------------
+    # service settings
+    # ------------------
 
-APP_PORT: <some port>
-APP_LIMIT_BODY_SIZE_IN_BYTES: 1048576
+    APP_PORT: <some port>
+    APP_LIMIT_BODY_SIZE_IN_BYTES: 1048576
 
 ```
 
@@ -114,8 +115,8 @@ Put users of service into `./users.txt`.
 
 `Users.txt` has the format:
 ```txt
-<username1>,<password_hash1>,<right1>:<rightN>
-<username2>,<password_hash2>,<right1>:<rightM>
+    <username1>,<password_hash1>,<right1>:<rightN>
+    <username2>,<password_hash2>,<right1>:<rightM>
 ```
 
 List of avalaible rights (each rigth gives access to one endpoint): 
@@ -124,9 +125,9 @@ List of avalaible rights (each rigth gives access to one endpoint):
 
 For instance:
 ```txt
-user1,#somehash123,getProcesses:createProcess:finishProcess
-user2,#somehash567,setState:getStates
-user3,#somehash901,getStates
+    user1,#somehash123,getProcesses:createProcess:finishProcess
+    user2,#somehash567,setState:getStates
+    user3,#somehash901,getStates
 ```
 To generate hash of password use CLI utility `keygen` or `keygen.exe` which is included into distributive.
 
