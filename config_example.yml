@@ -2,7 +2,7 @@
 # database settings
 # ------------------
 
-DB_CONN_STRING: "postgres://postgres:<pass>@<user>:<port>/postgres?sslmode=disable&search_path=<schema>"
+DB_CONN_STRING: "postgres://<user>:<pass>@<server>:<port>/postgres?sslmode=disable&search_path=<schema>"
 DB_SCHEMA: "<schema>"
 DB_RECREATE_TABLES: true
 DB_QUERY_TIMEOUT: 3000s
