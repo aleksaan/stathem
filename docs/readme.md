@@ -5,17 +5,13 @@
 **Service of states** - state machine for exchanging states of process between initiators/orchestrators/executors.
 
 There are four base entities in this service:
-- Models
-- Processes
-- Steps
-- States
-
-![Alt text](../images/Entities.png?raw=true "Main entities")
+- [Models](#models)
+- [Processes](#processes)
+- [Steps & States](#steps--states)
 
 ## Models
 
 Model is a graph of some workflow with its steps. 
-
 
 For example, let's see on imaginary `5-STEPS MODEL`
 
@@ -38,7 +34,7 @@ We can create process using API `/api/createProcess`.
 
 We see that Process inherited steps from Model it's based on and each Step is in certain State. Right after creating all steps are in `NONE` state.
 
-## States
+## Steps & States
 
 Real process executor gets `process_token` from initiator/orhestrator and writes states for steps of this process. 
 
@@ -57,8 +53,16 @@ Each step can be in one of these states
 
 ![Alt text](../images/States.png?raw=true "Main entities")
 
+This states model is `fixed`and is used for every step in any processes of any model.
+
 
 # Installation
+
+[Step1. Database](#step1-database)  
+[Step2. Configuration](#step2-configuration)  
+[Step3. Roles and users](#step3-roles-and-users)  
+[Step4. Start service](#step4-start-service)  
+[Step5. Log](#step5-log)
 
 ## Step1. Database
 
@@ -134,11 +138,20 @@ To generate hash of password use CLI utility `keygen` or `keygen.exe` which is i
 4. Change setting `DB_RECREATE_TABLES: true` -> `DB_RECREATE_TABLES: false`
 5. Start `service` (`service.exe`) again in production mode
 
-## Step5. Log of execution
+## Step5. Log
 
 Log is written into console. So you can gather it from there.
 
 # API specification
+
+[`/api/createModel`](#create-model)  
+[`/api/getModel`](#get-model)  
+[`/api/getModels`](#get-models)  
+[`/api/createProcess`](#create-process)  
+[`/api/getProcess`](#get-process)  
+[`/api/getProcesses`](#get-processes)  
+[`/api/setState`](#set-state)  
+[`/api/getStates`](#get-states)
 
 ### Authentication
 
@@ -162,6 +175,8 @@ Response: `200-OK`
 
 > [!NOTE]
 > When we create new model with the same name as existing model then existing model gets deactivated and new model becomes active.
+> [!NOTE]
+> We can use any states names and any model's name. 
 
 ### Get model
 
